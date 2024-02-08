@@ -46,7 +46,7 @@ const TableEditForm = (props) => {
     console.log(data);
     e.preventDefault();
     // --------------------------API----------------------------
-    axios.put(`http://localhost:5000/api/table/edit/${data._id}`, data).then((r) => {
+    axios.put(`https://food-server.cyclic.app/api/table/edit/${data._id}`, data).then((r) => {
       setOpen(props.handleEditClose);
       props.changeEdit(r.data._id);
     });

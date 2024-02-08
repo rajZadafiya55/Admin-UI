@@ -20,7 +20,7 @@ export default function Order() {
     }).then((result) => {
       console.log(row.id)
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/api/order/delete/${row.row._id}`).then((res) => {
+        axios.delete(`https://food-server.cyclic.app/api/order/delete/${row.row._id}`).then((res) => {
           setRows(rows.filter((rowd) => rowd.id !== row.id));
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -66,7 +66,7 @@ export default function Order() {
   ];
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/order/getAll').then((r) => {
+    axios.get('https://food-server.cyclic.app/api/order/getAll').then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

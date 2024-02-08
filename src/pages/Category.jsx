@@ -36,7 +36,7 @@ export default function Category() {
     }).then((result) => {
       console.log(row.id)
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/api/category/delete/${row.row._id}`).then((res) => {
+        axios.delete(`https://food-server.cyclic.app/api/category/delete/${row.row._id}`).then((res) => {
           setRows(rows.filter((rowd) => rowd.id !== row.id));
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -78,7 +78,7 @@ export default function Category() {
   ];
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/category/getAll').then((r) => {
+    axios.get('https://food-server.cyclic.app/api/category/getAll').then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

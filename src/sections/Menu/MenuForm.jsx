@@ -61,7 +61,7 @@ const MenuForm = (props) => {
   const [edit, setEdit] = useState(-1);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/category/getAll").then((res) => {
+    axios.get("https://food-server.cyclic.app/api/category/getAll").then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -72,7 +72,7 @@ const MenuForm = (props) => {
   }, [edit]);
 
   const getData = () => {
-    axios.get("http://localhost:5000/api/item/getAll").then((res) => {
+    axios.get("https://food-server.cyclic.app/api/item/getAll").then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -98,7 +98,7 @@ const MenuForm = (props) => {
     formData.append("imagename", data.imagename);
 
     await axios
-      .post("http://localhost:5000/api/item/add", formData)
+      .post("https://food-server.cyclic.app/api/item/add", formData)
       .then((res) => {
         // const filePath = res.data; 
         if (res.data.isSuccess === true) {

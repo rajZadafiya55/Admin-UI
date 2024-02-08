@@ -35,7 +35,7 @@ const CategoryForm = (props) => {
     console.log(data);
     e.preventDefault();
     // --------------------------API----------------------------
-    axios.post('http://localhost:5000/api/category/add', data).then((r) => {
+    axios.post('https://food-server.cyclic.app/api/category/add', data).then((r) => {
       console.log('Registration successfully..');
       props.changeEdit(r.data._id);
     });

@@ -44,7 +44,7 @@ export default function Menu() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/api/item/delete/${row.row._id}`)
+          .delete(`https://food-server.cyclic.app/api/item/delete/${row.row._id}`)
           .then((r) => {
             setAllItems(allItems.filter((rowd) => rowd.id !== row.id));
           });
@@ -96,7 +96,7 @@ export default function Menu() {
   ];
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/item/getAll").then((res) => {
+    axios.get("https://food-server.cyclic.app/api/item/getAll").then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

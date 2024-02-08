@@ -35,7 +35,7 @@ const TableForm = (props) => {
     console.log(data);
     e.preventDefault();
     // --------------------------API----------------------------  
-    axios.post('http://localhost:5000/api/table/add', data).then((r) => {
+    axios.post('https://food-server.cyclic.app/api/table/add', data).then((r) => {
       console.log('Registration successfully..');
       props.changeEdit(r.data._id);
     });

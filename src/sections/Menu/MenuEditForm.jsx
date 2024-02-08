@@ -51,7 +51,7 @@ const MenuEditForm = (props) => {
   const [edit, setEdit] = useState(-1);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/category/getAll").then((r) => {
+    axios.get("https://food-server.cyclic.app/api/category/getAll").then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -101,7 +101,7 @@ const MenuEditForm = (props) => {
     console.log(data._id);
 
     await axios
-      .patch(`http://localhost:5000/api/item/edit/${data._id}`, formData, {
+      .patch(`https://food-server.cyclic.app/api/item/edit/${data._id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

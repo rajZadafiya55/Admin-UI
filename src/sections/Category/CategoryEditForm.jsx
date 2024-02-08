@@ -31,7 +31,7 @@ console.log('data',data.category)
   const handleSubmit = (e, _id) => {
     e.preventDefault();
     // --------------------------API----------------------------
-    axios.put(`http://localhost:5000/api/category/edit/${data._id}`, data).then((r) => {
+    axios.put(`https://food-server.cyclic.app/api/category/edit/${data._id}`, data).then((r) => {
       setOpen(props.handleEditClose);
       props.changeEdit(r.data._id);
     });
