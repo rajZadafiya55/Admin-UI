@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from "axios";
 import Swal from "sweetalert2";
+import "../../styles/header.css";
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -50,10 +51,9 @@ const MenuForm = (props) => {
     e.persist();
     setdata({ ...data, [e.target.name]: e.target.value });
   };
+
   const fileChange = (e) => {
     setdata({ ...data, imagename: e.target.files[0] });
-    console.log(e.target.files[0]);
-    console.log(data.imagename)
   };
 
   // =========================================================================
@@ -95,39 +95,61 @@ const MenuForm = (props) => {
     formData.append("name", data.name);
     formData.append("price", data.price);
     formData.append("category", data.category);
-    formData.append("imagename", data.imagename);
+   formData.append("imagename", data.imagename);
 
-    await axios
-      .post("https://food-server.cyclic.app/api/item/add", formData)
-      .then((res) => {
-        // const filePath = res.data; 
-        if (res.data.isSuccess === true) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: res.data.message,
-            showConfirmButton: false,
-            timer: 2500,
-          });
-          getData();
-          setLoading(false);
-          setdata({ ...resetData, imagename: " " });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: res.data.message,
-            timer: 2500,
-          });
-        }
-        console.log("data add successfully.");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const cloudinaryResponse = await uploadToCloudinary(data.imagename);
+      const imageUrl = cloudinaryResponse.secure_url;
+      console.log("imageUrl",imageUrl);
 
+      await axios
+        .post("https://food-server.cyclic.app/api/item/add", formData)
+        .then((res) => {
+          if (res.data.isSuccess === true) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: res.data.message,
+              showConfirmButton: false,
+              timer: 2500,
+            });
+            getData();
+            setLoading(false);
+            setdata({ ...resetData, imagename: imageUrl });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res.data.message,
+              timer: 2500,
+            });
+          }
+          console.log("data add successfully.");
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
     setdata({ ...resetData, imagename: " " });
     setOpen(props.handleClose);
+  };
+
+  const uploadToCloudinary = async (file) => {
+    console.log("file",file)
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "restaurant_menu");
+    formData.append("cloud_name", "dsrk7genk");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dsrk7genk/image/upload",
+        formData
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      throw error;
+    }
   };
   return (
     <div>

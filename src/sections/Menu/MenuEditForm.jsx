@@ -51,14 +51,16 @@ const MenuEditForm = (props) => {
   const [edit, setEdit] = useState(-1);
 
   useEffect(() => {
-    axios.get("https://food-server.cyclic.app/api/category/getAll").then((r) => {
-      const d = r.data.data.map((value, index) => {
-        value.id = index + 1;
-        return value;
+    axios
+      .get("https://food-server.cyclic.app/api/category/getAll")
+      .then((r) => {
+        const d = r.data.data.map((value, index) => {
+          value.id = index + 1;
+          return value;
+        });
+        setRows(d);
+        console.log(d);
       });
-      setRows(d);
-      console.log(d);
-    });
   }, [edit]);
 
   // ==========Edit=================
@@ -72,10 +74,6 @@ const MenuEditForm = (props) => {
     setdata({ ...data, [e.target.name]: e.target.value });
     console.log(data);
   };
-
-  // const fileChange = (e) => {
-  //   setdata({ ...data, imagename: e.target.files[0] });
-  // };
 
   const fileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -100,25 +98,50 @@ const MenuEditForm = (props) => {
 
     console.log(data._id);
 
-    await axios
-      .patch(`https://food-server.cyclic.app/api/item/edit/${data._id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log("Edit success:", res.data.data);
-        props.changeEdit(res.data._id);
-        setOpen(props.handleEditClose);
-        setdata(resetData());
+    try {
+      const cloudinaryResponse = await uploadToCloudinary(data.imagename);
+      const imageUrl = cloudinaryResponse.secure_url;
+      console.log("imageUrl", imageUrl);
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error editing item:", error);
-      });
+      await axios
+        .patch(`https://food-server.cyclic.app/api/item/edit/${data._id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log("Edit success:", res.data.data);
+          props.changeEdit(res.data._id);
+          setOpen(props.handleEditClose);
+          setdata(resetData());
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error editing item:", error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const uploadToCloudinary = async (file) => {
+    console.log("file", file);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "restaurant_menu");
+    formData.append("cloud_name", "dsrk7genk");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dsrk7genk/image/upload",
+        formData
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      throw error;
+    }
+  };
   return (
     <div>
       <ValidatorForm
