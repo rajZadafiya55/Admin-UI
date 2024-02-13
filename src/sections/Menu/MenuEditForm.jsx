@@ -104,7 +104,7 @@ const MenuEditForm = (props) => {
       console.log("imageUrl", imageUrl);
 
       await axios
-        .patch(`http://localhost:5000/api/item/edit/${data._id}`, formData, {
+        .patch(`https://food-server.cyclic.app/api/item/edit/${data._id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
