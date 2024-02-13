@@ -7,6 +7,7 @@ import { Card, Container, Stack, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import '../styles/header.css';
+import { APIHttp } from "../helper/API";
 
 export default function Order() {
   const [rows, setRows] = useState([]);
@@ -20,7 +21,7 @@ export default function Order() {
     }).then((result) => {
       console.log(row.id)
       if (result.isConfirmed) {
-        axios.delete(`https://food-server.cyclic.app/api/order/delete/${row.row._id}`).then((res) => {
+        axios.delete(`${APIHttp}/order/delete/${row.row._id}`).then((res) => {
           setRows(rows.filter((rowd) => rowd.id !== row.id));
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -66,7 +67,7 @@ export default function Order() {
   ];
 
   useEffect(() => {
-    axios.get('https://food-server.cyclic.app/api/order/getAll').then((r) => {
+    axios.get(`${APIHttp}/order/getAll`).then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

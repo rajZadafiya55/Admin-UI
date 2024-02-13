@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import axios from 'axios';
+import { APIHttp } from '../../helper/API';
 
 const TextField = styled(TextValidator)(() => ({
   width: '100%',
@@ -32,11 +33,6 @@ const TableEditForm = (props) => {
     setdata({ ...props.editrow.row });
   }, [props.editrow.row]);
 
-  // const handleChange = (e) => {
-  //   e.persist();
-  //   setdata({ ...data, [e.target.name]: e.target.value });
-  // };
-
   const handleChange = (e) => {
     e.persist();
     setdata((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
@@ -46,7 +42,7 @@ const TableEditForm = (props) => {
     console.log(data);
     e.preventDefault();
     // --------------------------API----------------------------
-    axios.put(`https://food-server.cyclic.app/api/table/edit/${data._id}`, data).then((r) => {
+    axios.put(`${APIHttp}/table/edit/${data._id}`, data).then((r) => {
       setOpen(props.handleEditClose);
       props.changeEdit(r.data._id);
     });

@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import axios from 'axios';
+import { APIHttp } from '../../helper/API';
 
 const TextField = styled(TextValidator)(() => ({
   width: '100%',
@@ -31,18 +32,13 @@ console.log('data',data.category)
   const handleSubmit = (e, _id) => {
     e.preventDefault();
     // --------------------------API----------------------------
-    axios.put(`https://food-server.cyclic.app/api/category/edit/${data._id}`, data).then((r) => {
+    axios.put(`${APIHttp}/category/edit/${data._id}`, data).then((r) => {
       setOpen(props.handleEditClose);
       props.changeEdit(r.data._id);
     });
     setdata((e.target.value = ''));
   };
 
-  // useEffect(() => {
-  //   if(props.editrow.row){
-  //     props.changeEdit(data);
-  //   }
-  // })
   return (
     <div>
       <ValidatorForm onSubmit={handleSubmit} onError={() => null} autocomplete="off">

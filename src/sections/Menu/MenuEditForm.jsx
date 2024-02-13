@@ -13,6 +13,7 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from "axios";
+import { APIHttp } from '../../helper/API';
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -52,7 +53,7 @@ const MenuEditForm = (props) => {
 
   useEffect(() => {
     axios
-      .get("https://food-server.cyclic.app/api/category/getAll")
+      .get(`${APIHttp}/category/getAll`)
       .then((r) => {
         const d = r.data.data.map((value, index) => {
           value.id = index + 1;
@@ -104,7 +105,7 @@ const MenuEditForm = (props) => {
       console.log("imageUrl", imageUrl);
 
       await axios
-        .patch(`https://food-server.cyclic.app/api/item/edit/${data._id}`, formData, {
+        .patch(`${APIHttp}/item/edit/${data._id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

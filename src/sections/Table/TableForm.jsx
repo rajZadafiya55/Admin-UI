@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import axios from 'axios';
+import { APIHttp } from '../../helper/API';
 
 const TextField = styled(TextValidator)(() => ({
   width: '100%',
@@ -35,7 +36,7 @@ const TableForm = (props) => {
     console.log(data);
     e.preventDefault();
     // --------------------------API----------------------------  
-    axios.post('https://food-server.cyclic.app/api/table/add', data).then((r) => {
+    axios.post(`${APIHttp}/table/add`, data).then((r) => {
       console.log('Registration successfully..');
       props.changeEdit(r.data._id);
     });

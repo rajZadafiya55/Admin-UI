@@ -11,6 +11,7 @@ import { Card, Container, Dialog, DialogActions, DialogContent, DialogTitle, Sta
 import { DataGrid } from '@mui/x-data-grid';
 import TableDialog from '../sections/Table/TableDialog';
 import TableEditForm from '../sections/Table/TableEditForm';
+import { APIHttp } from "../helper/API";
 
 export default function Table() {
   const [rows, setRows] = useState([]);
@@ -36,7 +37,7 @@ export default function Table() {
     }).then((result) => {
       console.log(row.id)
       if (result.isConfirmed) {
-        axios.delete(`https://food-server.cyclic.app/api/table/delete/${row.row._id}`).then((res) => {
+        axios.delete(`${APIHttp}/table/delete/${row.row._id}`).then((res) => {
           setRows(rows.filter((rowd) => rowd.id !== row.id));
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -78,7 +79,7 @@ export default function Table() {
   ];
 
   useEffect(() => {
-    axios.get('https://food-server.cyclic.app/api/table/getAll').then((r) => {
+    axios.get(`${APIHttp}/table/getAll`).then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

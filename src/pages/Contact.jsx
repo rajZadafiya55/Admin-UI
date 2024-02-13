@@ -6,6 +6,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid-pro';
 import { Card, Container, Stack, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { APIHttp } from '../helper/API';
 
 export default function Contact() {
   const [rows, setRows] = useState([]);
@@ -19,7 +20,7 @@ export default function Contact() {
     }).then((result) => {
       console.log(row.id)
       if (result.isConfirmed) {
-        axios.delete(`https://food-server.cyclic.app/api/contact/delete/${row.row._id}`).then((res) => {
+        axios.delete(`${APIHttp}/contact/delete/${row.row._id}`).then((res) => {
           setRows(rows.filter((rowd) => rowd.id !== row.id));
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -62,7 +63,7 @@ export default function Contact() {
   ];
 
   useEffect(() => {
-    axios.get('https://food-server.cyclic.app/api/contact/getAll').then((r) => {
+    axios.get(`${APIHttp}/contact/getAll`).then((r) => {
       const d = r.data.data.map((value, index) => {
         value.id = index + 1;
         return value;

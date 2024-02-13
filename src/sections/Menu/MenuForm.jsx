@@ -15,6 +15,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "../../styles/header.css";
+import { APIHttp } from '../../helper/API';
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -61,7 +62,7 @@ const MenuForm = (props) => {
   const [edit, setEdit] = useState(-1);
 
   useEffect(() => {
-    axios.get("https://food-server.cyclic.app/api/category/getAll").then((res) => {
+    axios.get(`${APIHttp}/category/getAll`).then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -72,7 +73,7 @@ const MenuForm = (props) => {
   }, [edit]);
 
   const getData = () => {
-    axios.get("https://food-server.cyclic.app/api/item/getAll").then((res) => {
+    axios.get(`${APIHttp}/item/getAll`).then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -103,7 +104,7 @@ const MenuForm = (props) => {
       console.log("imageUrl",imageUrl);
 
       await axios
-        .post("https://food-server.cyclic.app/api/item/add", formData)
+        .post(`${APIHttp}/item/add`, formData)
         .then((res) => {
           if (res.data.isSuccess === true) {
             Swal.fire({

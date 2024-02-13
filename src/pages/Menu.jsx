@@ -19,6 +19,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import MenuDialog from "../sections/Menu/MenuDialog";
 import MenuEditForm from "../sections/Menu/MenuEditForm";
+import { APIHttp } from "../helper/API";
 
 export default function Menu() {
   const [allItems, setAllItems] = useState([]);
@@ -44,7 +45,7 @@ export default function Menu() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://food-server.cyclic.app/api/item/delete/${row.row._id}`)
+          .delete(`${APIHttp}/item/delete/${row.row._id}`)
           .then((r) => {
             setAllItems(allItems.filter((rowd) => rowd.id !== row.id));
           });
@@ -96,7 +97,7 @@ export default function Menu() {
   ];
 
   useEffect(() => {
-    axios.get("https://food-server.cyclic.app/api/item/getAll").then((res) => {
+    axios.get(`${APIHttp}/item/getAll`).then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
