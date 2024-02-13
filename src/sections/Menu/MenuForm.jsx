@@ -72,7 +72,7 @@ const MenuForm = (props) => {
   }, [edit]);
 
   const getData = () => {
-    axios.get("https://food-server.cyclic.app/api/item/getAll").then((res) => {
+    axios.get("http://localhost:5000/api/item/getAll").then((res) => {
       const data = res.data.data.map((value, index) => {
         value.id = index + 1;
         return value;
@@ -103,7 +103,7 @@ const MenuForm = (props) => {
       console.log("imageUrl",imageUrl);
 
       await axios
-        .post("https://food-server.cyclic.app/api/item/add", formData)
+        .post("http://localhost:5000/api/item/add", formData)
         .then((res) => {
           if (res.data.isSuccess === true) {
             Swal.fire({
@@ -125,6 +125,7 @@ const MenuForm = (props) => {
             });
           }
           console.log("data add successfully.");
+          console.log("Inserteddata",res.data.data);
         });
     } catch (error) {
       console.error("Error:", error);

@@ -55,7 +55,7 @@ export default function Order() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 120,
+      width: 20,
       cellClassName: 'actions',
       getActions: (row,key) => {
         return [
