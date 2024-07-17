@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../Styles/login.css";
+import "../styles/login.css";
 
 // @mui
 
@@ -17,7 +17,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 // components
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { APIHttp } from '../helper/API';
+import { APIHttp } from "../helper/API";
 
 const TextField = styled(TextValidator)(() => ({
   width: "90%",
@@ -68,16 +68,16 @@ export default function RegistrationForm() {
       .catch(() => {
         toast("Something wrong...");
       });
-      setdata({
-        title: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        role: "Admin", 
-        acceptTerms: true,
-      });
+    setdata({
+      title: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      role: "Admin",
+      acceptTerms: true,
+    });
   };
   return (
     <div className="container mt-5 login register">
@@ -186,10 +186,7 @@ export default function RegistrationForm() {
             label="Confirm Password"
             value={data.confirmPassword || ""}
             validators={["required", "isPasswordMatch"]}
-            errorMessages={[
-              "this field is required",
-              "password didn't match",
-            ]}
+            errorMessages={["this field is required", "password didn't match"]}
           />
 
           <Button fullWidth size="large" type="submit" variant="contained">
