@@ -15,7 +15,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "../../styles/header.css";
-import { APIHttp } from '../../helper/API';
+import { APIHttp } from "../../helper/API";
 
 const TextField = styled(TextValidator)(() => ({
   width: "100%",
@@ -96,37 +96,35 @@ const MenuForm = (props) => {
     formData.append("name", data.name);
     formData.append("price", data.price);
     formData.append("category", data.category);
-   formData.append("imagename", data.imagename);
+    formData.append("imagename", data.imagename);
 
     try {
       const cloudinaryResponse = await uploadToCloudinary(data.imagename);
       const imageUrl = cloudinaryResponse.secure_url;
-      console.log("imageUrl",imageUrl);
+      console.log("imageUrl", imageUrl);
 
-      await axios
-        .post(`${APIHttp}/item/add`, formData)
-        .then((res) => {
-          if (res.data.isSuccess === true) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: res.data.message,
-              showConfirmButton: false,
-              timer: 2500,
-            });
-            getData();
-            setLoading(false);
-            setdata({ ...resetData, imagename: imageUrl });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: res.data.message,
-              timer: 2500,
-            });
-          }
-          console.log("data add successfully.");
-        });
+      await axios.post(`${APIHttp}/item/add`, formData).then((res) => {
+        if (res.data.isSuccess === true) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: res.data.message,
+            showConfirmButton: false,
+            timer: 2500,
+          });
+          getData();
+          setLoading(false);
+          setdata({ ...resetData, imagename: imageUrl });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res.data.message,
+            timer: 2500,
+          });
+        }
+        console.log("data add successfully.");
+      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -135,7 +133,7 @@ const MenuForm = (props) => {
   };
 
   const uploadToCloudinary = async (file) => {
-    console.log("file",file)
+    console.log("file", file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "restaurant_menu");
