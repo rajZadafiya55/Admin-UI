@@ -115,6 +115,7 @@ const MenuForm = (props) => {
           getData();
           setLoading(false);
           setdata({ ...resetData, imagename: imageUrl });
+          window.location.reload();
         } else {
           Swal.fire({
             icon: "error",
