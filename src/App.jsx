@@ -8,7 +8,7 @@ import Sidebar from "./components/Sidebar";
 import LoginForm from "./components/Login";
 import Category from "./pages/Category";
 import Payment from "./pages/Payment";
-import "./app.css";
+import "./App.css";
 import Contact from "./pages/Contact";
 import RegistrationForm from "./components/Register";
 import Dashboard from "./pages/Dashboard";
